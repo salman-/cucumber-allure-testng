@@ -1,0 +1,144 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.example</groupId>
+  <artifactId>Allure-Cucumber-TestNg</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>Allure-Cucumber-TestNg</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <allure-maven-plugin.version>2.12.0</allure-maven-plugin.version>
+    <allure-maven-report.version>2.10.0</allure-maven-report.version>
+    <allure-maven.version>2.12.0</allure-maven.version>
+    <aspectj.version>1.9.19</aspectj.version>
+    <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+    <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-bom</artifactId>
+        <version>7.12.1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <!-- Cucumber using testNg -->
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-testng</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!--  TestNG is used for verification   -->
+    <dependency>
+      <artifactId>testng</artifactId>
+      <groupId>org.testng</groupId>
+      <version>7.8.0</version>
+    </dependency>
+
+    <!-- required by Allure web view -->
+    <dependency>
+      <artifactId>allure-testng</artifactId>
+      <groupId>io.qameta.allure</groupId>
+      <version>2.23.0</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <release>17</release>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven-surefire-plugin.version}</version>
+        <configuration>
+          <skip>true</skip>
+          <trimStackTrace>false</trimStackTrace>
+          <argLine>-Xmx1024m</argLine>
+        </configuration>
+        <executions>
+          <execution>
+            <id>cucumber-integration-tests</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <skip>false</skip>
+              <systemPropertyVariables>
+                <allure.results.directory>target/allure-results</allure.results.directory>
+              </systemPropertyVariables>
+
+              <includes>
+                <include>**/*CucumberRunnerTests.java</include>
+              </includes>
+
+              <argLine>
+                -Xms500m -Xmx2036m -XX:MaxMetaspaceSize=256m -XX:ReservedCodeCacheSize=256m
+                -XX:MaxDirectMemorySize=2048m -Xshare:off
+                -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+              </argLine>
+              <testFailureIgnore>true</testFailureIgnore>
+              <useSystemClassLoader>false</useSystemClassLoader>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <artifactId>aspectjweaver</artifactId>
+            <groupId>org.aspectj</groupId>
+            <version>${aspectj.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-maven</artifactId>
+        <version>${allure-maven.version}</version>
+      </plugin>
+
+    </plugins>
+
+  </build>
+  <reporting>
+    <excludeDefaults>true</excludeDefaults>
+    <plugins>
+      <plugin>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-maven</artifactId>
+        <version>${allure-maven-plugin.version}</version>
+        <configuration>
+          <reportVersion>${allure-maven-report.version}</reportVersion>
+          <inputDirectories>${basedir}/target/allure-results</inputDirectories>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </reporting>
+
+</project>
