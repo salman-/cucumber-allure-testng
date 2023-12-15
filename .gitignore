@@ -5,7 +5,7 @@ target/
 
 ### Allure
 .allure
-.allure-results
+allure-results
 
 ### IntelliJ IDEA ###
 .idea
