@@ -59,6 +59,12 @@
       <groupId>io.qameta.allure</groupId>
       <version>2.23.0</version>
     </dependency>
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-cucumber-jvm</artifactId>
+      <version>2.20.1</version>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -93,10 +99,6 @@
               <systemPropertyVariables>
                 <allure.results.directory>target/allure-results</allure.results.directory>
               </systemPropertyVariables>
-
-              <includes>
-                <include>**/*CucumberRunnerTests.java</include>
-              </includes>
 
               <argLine>
                 -Xms500m -Xmx2036m -XX:MaxMetaspaceSize=256m -XX:ReservedCodeCacheSize=256m
