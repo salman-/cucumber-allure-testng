@@ -1,6 +1,6 @@
 name: Cucumber tests
 
-on: [ push ]
+on: [ push, workflow_dispatch  ]
 
 jobs:
   test:
