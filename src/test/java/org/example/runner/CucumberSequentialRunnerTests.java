@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 @Test
 @CucumberOptions(
-    features = "src/test/resources/features",
+    features = "src/test/resources/features/sequential-run",
     glue = "org.example.stepDefinitions",
     plugin = {
         "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
@@ -14,6 +14,6 @@ import org.testng.annotations.Test;
         "html:target/cucumber-reports.html"
     }
 )
-public class CucumberRunnerTests extends AbstractTestNGCucumberTests {
+public class CucumberSequentialRunnerTests extends AbstractTestNGCucumberTests {
 
 }
