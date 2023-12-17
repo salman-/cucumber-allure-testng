@@ -18,7 +18,7 @@ jobs:
         uses: browser-actions/setup-chrome@latest
 
       - name: Run Test
-        run: mvn clean install site allure::report
+        run: mvn clean test
 
       - name: Get Allure history
         uses: actions/checkout@v3
