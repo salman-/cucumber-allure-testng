@@ -7,13 +7,13 @@ import org.testng.annotations.Test;
 
 @Test
 @CucumberOptions(
-    features = "src/test/resources/features/parallel-run",
-    glue = "org.example.stepDefinitions",
-    plugin = {
-        "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
-        "pretty",
-        "html:target/cucumber-reports.html"
-    }
+        features = "src/test/resources/features/parallel-run",
+        glue = {"org.example.stepDefinitions", "org.example.utility"},
+        plugin = {
+                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
+                "pretty",
+                "html:target/cucumber-reports.html"
+        }
 )
 public class CucumberParallelRunnerTests extends AbstractTestNGCucumberTests {
 
